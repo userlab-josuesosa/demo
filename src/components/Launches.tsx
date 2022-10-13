@@ -1,5 +1,5 @@
 import { LaunchType } from '../types/Launch'
-import empty from '../assets/empty-box.png'
+import Empty from './Empty'
 
 const Launches: React.FC<{
   launches?: LaunchType[]
@@ -28,10 +28,7 @@ const Launches: React.FC<{
           </tbody>
         </table>
       ) : (
-        <div>
-          <img src={empty} alt='empty-box' />
-          <p>Nothing to show</p>
-        </div>
+        <Empty />
       )}
     </div>
   )

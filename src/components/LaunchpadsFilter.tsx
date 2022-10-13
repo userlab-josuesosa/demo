@@ -8,7 +8,7 @@ const LaunchpadsFilter: React.FC<{
   disabled: boolean
 }> = ({ launchpads, value, onChange, search, disabled }) => {
   return (
-    <div>
+    <div className='search'>
       <select value={value} onChange={e => onChange(e.target.value)} disabled={disabled}>
         <option disabled value=''>
           Select a Launchpad...
@@ -19,6 +19,7 @@ const LaunchpadsFilter: React.FC<{
           </option>
         ))}
       </select>
+
       <button onClick={() => search()}>Search</button>
     </div>
   )

@@ -13,6 +13,7 @@ import { launchpadsQuery } from './queries/launchpads'
 const App: React.FC<{}> = () => {
   const [launchpads, setLaunchpads] = useState<LaunchpadType[]>([])
   const [launchpadId, setLaunchpadId] = useState<string>('')
+  const [firstSearch, setFirstSearch] = useState(false)
 
   const {
     loading: loadingLaunchpads,
@@ -36,24 +37,31 @@ const App: React.FC<{}> = () => {
   }, [errorLaunchpads, errorLaunches])
 
   const search = () => {
+    if (!firstSearch) setFirstSearch(true)
     getLaunches({ variables: { siteId: launchpadId } })
   }
 
   return (
     <div>
-      <h1>Space X Launch Data</h1>
-      {loadingLaunchpads ? (
-        <Spinner />
-      ) : (
-        <LaunchpadsFilter
-          launchpads={launchpads}
-          value={launchpadId}
-          onChange={setLaunchpadId}
-          search={search}
-          disabled={loadingLaunches}
-        />
-      )}
-      {loadingLaunches ? <Spinner /> : <Launches launches={dataLaunches?.launches} />}
+      <header className='header'>
+        <h1>Space X Launch Data</h1>
+      </header>
+
+      <main className='main'>
+        {loadingLaunchpads ? (
+          <Spinner />
+        ) : (
+          <LaunchpadsFilter
+            launchpads={launchpads}
+            value={launchpadId}
+            onChange={setLaunchpadId}
+            search={search}
+            disabled={loadingLaunches}
+          />
+        )}
+        {firstSearch &&
+          (loadingLaunches ? <Spinner /> : <Launches launches={dataLaunches?.launches} />)}
+      </main>
     </div>
   )
 }
