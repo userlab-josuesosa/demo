@@ -1,32 +1,37 @@
+import { useState } from 'react'
 import { LaunchType } from '../types/Launch'
+import { TabType } from '../types/Tab'
 import Empty from './Empty'
+import LaunchesGraph from './LaunchesGraph'
+import LaunchesTable from './LaunchesTable'
 
 const Launches: React.FC<{
   launches?: LaunchType[]
 }> = ({ launches }) => {
+  const [tab, setTab] = useState<TabType>('Graph')
+
+  const tabStyle = (type: TabType) => (type === tab ? 'tab-selected' : 'tab-deselected')
+
   return (
-    <div>
+    <div className='launches'>
       {launches?.length ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Rocket Name</th>
-              <th>Date</th>
-              <th>Success</th>
-            </tr>
-          </thead>
-          <tbody>
-            {launches.map((launch, key) => (
-              <tr key={key}>
-                <td>{launch.id}</td>
-                <td>{launch.rocket.rocket_name}</td>
-                <td>{launch.launch_date_utc}</td>
-                <td>{launch.launch_success ? 'yes' : 'no'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div>
+          <div className='tab-header'>
+            <button className={tabStyle('Graph')} onClick={() => setTab('Graph')}>
+              Graph
+            </button>
+            <button className={tabStyle('Table')} onClick={() => setTab('Table')}>
+              Table
+            </button>
+          </div>
+          <div className='tab-body'>
+            {tab === 'Graph' ? (
+              <LaunchesGraph launches={launches} />
+            ) : (
+              <LaunchesTable launches={launches} />
+            )}
+          </div>
+        </div>
       ) : (
         <Empty />
       )}

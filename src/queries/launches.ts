@@ -5,12 +5,10 @@ query Launches($siteId: String!) {
     details
     launch_date_utc
     launch_success
-    launch_year
     mission_name
     rocket {
       rocket_name
     }
-    upcoming
   }
 }
 `

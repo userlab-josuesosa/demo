@@ -24,7 +24,6 @@ const App: React.FC<{}> = () => {
     useLazyQuery<LaunchDataType, LaunchVarsTypes>(gql(launchesQuery))
 
   useEffect(() => {
-    console.log('Loading...')
     if (dataLaunchpads?.launchpads) {
       const sorted = [...dataLaunchpads.launchpads].sort((a, b) => a.name.localeCompare(b.name))
 
@@ -33,7 +32,7 @@ const App: React.FC<{}> = () => {
   }, [loadingLaunchpads, dataLaunchpads])
 
   useEffect(() => {
-    console.log({ errorLaunches, errorLaunchpads })
+    if (errorLaunches || errorLaunchpads) alert(errorLaunches || errorLaunchpads)
   }, [errorLaunchpads, errorLaunches])
 
   const search = () => {
@@ -60,7 +59,17 @@ const App: React.FC<{}> = () => {
           />
         )}
         {firstSearch &&
-          (loadingLaunches ? <Spinner /> : <Launches launches={dataLaunches?.launches} />)}
+          (loadingLaunches ? (
+            <Spinner />
+          ) : (
+            <Launches
+              launches={dataLaunches?.launches.map(l => ({
+                ...l,
+                launch_success: !!l.launch_success,
+                launch_date_utc: l.launch_date_utc.split('.')[0],
+              }))}
+            />
+          ))}
       </main>
     </div>
   )

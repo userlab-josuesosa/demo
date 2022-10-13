@@ -7,10 +7,8 @@ export interface LaunchType {
   details: string
   launch_date_utc: string
   launch_success: true
-  launch_year: string
   mission_name: string
   rocket: RocketType
-  upcoming: boolean
 }
 
 export interface LaunchDataType {
@@ -19,4 +17,8 @@ export interface LaunchDataType {
 
 export interface LaunchVarsTypes {
   siteId: string
+}
+
+export interface LaunchGraphObj {
+  [key: string]: number
 }
