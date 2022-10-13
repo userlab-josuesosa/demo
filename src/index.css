@@ -28,11 +28,17 @@
 }
 
 .loader {
-  border-top: 3px solid var(--blueish);
+  border-top: 5px solid var(--blueish);
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   animation: spin 500ms linear infinite;
+}
+
+.loader-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .search {
